@@ -19,7 +19,7 @@
         "php": "^7.4|^8.0",
         "illuminate/contracts": "^6.0|^8.37|^9.0",
         "kitloong/laravel-app-logger": "^1.0",
-        "spatie/laravel-package-tools": "^1.4.3"
+        "macerd/laravel-package-tools": "dev-main"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",
