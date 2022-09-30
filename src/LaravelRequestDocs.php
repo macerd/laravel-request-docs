@@ -4,6 +4,7 @@ namespace Rakutentech\LaravelRequestDocs;
 
 use Route;
 use ReflectionMethod;
+use ReflectionClass;
 use Illuminate\Support\Str;
 use Exception;
 use Throwable;
@@ -126,7 +127,8 @@ class LaravelRequestDocs
                 $requestClassName = $param->getType()->getName();
                 $requestClass = null;
                 try {
-                    $requestClass = new $requestClassName();
+                    $reflection = new ReflectionClass($requestClassName);
+                    $requestClass = $reflection->newInstanceWithoutConstructor();
                 } catch (Throwable $th) {
                     //throw $th;
                 }
@@ -147,13 +149,12 @@ class LaravelRequestDocs
                     }
                 }
 
-                $controllersInfo[$index]['docBlock'] = $this->lrdDocComment($reflectionMethod->getDocComment());
-
                 $controllersInfo[$index]['rules'] = array_merge(
                     $controllersInfo[$index]['rules'] ?? [],
                     $customRules,
                 );
             }
+            $controllersInfo[$index]['docBlock'] = $this->lrdDocComment($reflectionMethod->getDocComment());
         }
         return $controllersInfo;
     }
@@ -229,9 +230,9 @@ class LaravelRequestDocs
                 return count($item[0]) > 0;
             })
             ->transform(function ($item) {
-                $fieldName = Str::of($item[0][0])->replace(['"', "'"], '');
+                $fieldName = str_replace(['"', "'"], '', $item[0][0]);
                 $definedFieldRules = collect(array_slice($item[0], 1))->transform(function ($rule) {
-                    return Str::of($rule)->replace(['"', "'"], '')->__toString();
+                    return (string) str_replace(['"', "'"], '', $rule);
                 })->toArray();
 
                 return ['key' => $fieldName, 'rules' => $definedFieldRules];

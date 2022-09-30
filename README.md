@@ -94,7 +94,7 @@ For extra documentation you can use markdown inside your controller method as we
 
 ![Preview](https://imgur.com/y8jT3jj.png)
 
-**Resonse profile**
+**Response profile**
 
 ![Preview](https://imgur.com/U0Je956.png)
 
@@ -173,4 +173,6 @@ Fixing lints
 - v1.20 Feature support open api 3.0.0 #10
 - v1.21 Abililty to add custom params
 - v1.22 Boolean|File|Image support
+- v1.22 Boolean|File|Image support
+- v1.23 Bug fix for lrd doc block #76
 
